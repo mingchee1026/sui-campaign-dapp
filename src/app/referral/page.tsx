@@ -1,16 +1,15 @@
 "use client";
 
 import React, { useLayoutEffect, useEffect, useRef, useState } from "react";
-import {
-  useAuthCallback,
-  useZkLogin,
-  useZkLoginSession,
-} from "@mysten/enoki/react";
+import { useZkLogin } from "@mysten/enoki/react";
+import { formatAddress } from "@mysten/sui/utils";
+import Image from "next/image";
 import { Paper } from "@/components/general/Paper";
 import { useUsers } from "@/hooks/useUsers";
 import { GeneralTable } from "@/components/general/GeneralTable";
 import { getSuiExplorerLink } from "@/helpers/getSuiExplorerLink";
 import { SuiExplorerLink } from "@/components/general/SuiExplorerLink";
+import { LoadingButton } from "@/components/general/LoadingButton";
 
 export default function Page() {
   const { address } = useZkLogin();
@@ -18,8 +17,14 @@ export default function Page() {
     useUsers();
   const [referralUri, setReferralUri] = useState("");
   const [tableRows, setTableRows] = useState([]);
+  const [attributionCode, setAttributionCode] = useState("");
 
-  const tableHeaders = ["Email", "Referee Address", "Explorer"];
+  const tableHeaders = [
+    "Email",
+    "Referee Address",
+    "Custodial Address",
+    "Explorer",
+  ];
   const tableState = {
     page: 0,
     pageSize: 10,
@@ -31,27 +36,32 @@ export default function Page() {
     const protocol = window.location.protocol;
     const host = window.location.host;
 
-    setReferralUri(`${protocol}//${host}`);
-
     if (!profile) {
       handleGetProfile();
     }
 
+    //@ts-ignore
+    const attribution_code = profile?.attribution_code;
+    setAttributionCode(attribution_code);
+    setReferralUri(`${protocol}//${host}/refer/${attribution_code}`);
+
     if (profile && !referred) {
-      handleGetReferred(profile.attribution_code);
+      handleGetReferred(attribution_code);
     }
   }, [profile]);
 
   useEffect(() => {
     if (referred) {
+      //@ts-ignore
       const rows = referred.map((referral, index) => {
         return {
           id: referral.email,
           columns: [
             referral.email,
-            referral.wallet_address,
+            formatAddress(referral.wallet_address),
+            formatAddress(referral.custodial_address),
             SuiExplorerLink({
-              objectId: referral.wallet_address,
+              objectId: referral.custodial_address,
               moduleName: "",
               type: "address",
             }),
@@ -60,9 +70,12 @@ export default function Page() {
         };
       });
       setTableRows(rows);
-      // console.log({ referred });
     }
   }, [referred]);
+
+  const onReloadClick = () => {
+    handleGetReferred(attributionCode);
+  };
 
   return (
     <Paper>
@@ -71,13 +84,29 @@ export default function Page() {
           This is the Referral Widget page
         </div>
         <div className="p-2 min-h-[2vh] text-center font-bold text-white text-[22px]">
-          Your Referral URL:{" "}
-          {`${referralUri}/refer/${profile?.attribution_code}`}
+          Your Referral URL: {referralUri}
         </div>
         <div className="p-2 text-center font-bold text-white text-[22px]">
           Total Referred Users: {tableRows.length}
         </div>
         <div>
+          <div className="flex justify-end">
+            <LoadingButton
+              onClick={onReloadClick}
+              isLoading={isLoading}
+              className="flex space-x-0 md:space-x-2 items-center border-[1px] border-custom-border rounded-[36px] px-[10px] bg-[inherit] hover:bg-[#12BF77]"
+            >
+              <Image
+                src="/general/plus.svg"
+                alt="plus"
+                width={20}
+                height={20}
+              />
+              <div className="hidden font-semibold md:block">
+                Reload Referred Users
+              </div>
+            </LoadingButton>
+          </div>
           <GeneralTable
             rows={tableRows}
             headers={tableHeaders}

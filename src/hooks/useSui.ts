@@ -1,3 +1,4 @@
+//@ts-ignore
 import { SuiClient } from "@mysten/sui.js/client";
 
 export const useSui = () => {

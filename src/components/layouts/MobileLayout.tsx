@@ -11,9 +11,10 @@ export const MobileLayout = ({ children }: ChildrenProps) => {
 
   return (
     <div
-      className={`static flex-col w-full h-full ${
-        address ? "role-admin" : "role-anonymous"
-      }`}
+      // className={`static w-full h-full flex-col items-center justify-center ${
+      //   address ? "role-admin" : "role-anonymous"
+      // }`}
+      className={`static w-full h-full flex-col items-center justify-center role-admin`}
     >
       <TopNavbar />
       {children}

@@ -3,7 +3,7 @@
 import { LargeScreenLayout } from "@/components/layouts/LargeScreenLayout";
 import { MobileLayout } from "@/components/layouts/MobileLayout";
 import { BalanceProvider } from "@/contexts/BalanceContext";
-import { useIsMobile } from "@/hooks/useIsMobile";
+// import { useIsMobile } from "@/hooks/useIsMobile";
 import { useRegisterServiceWorker } from "@/hooks/useRegisterServiceWorker";
 import { ChildrenProps } from "@/types/ChildrenProps";
 import { EnokiFlowProvider } from "@mysten/enoki/react";
@@ -13,7 +13,7 @@ import backgroundImage from "../../public/Tablebackground.svg";
 
 export const ProvidersAndLayout = ({ children }: ChildrenProps) => {
   const _ = useRegisterServiceWorker();
-  const { isMobile } = useIsMobile();
+  // const { isMobile } = useIsMobile();
 
   return (
     <EnokiFlowProvider apiKey={process.env.NEXT_PUBLIC_ENOKI_API_KEY!}>
@@ -27,8 +27,9 @@ export const ProvidersAndLayout = ({ children }: ChildrenProps) => {
             backgroundPositionY: "top",
           }}
         >
-          {!!isMobile && <MobileLayout>{children}</MobileLayout>}
-          {!isMobile && <LargeScreenLayout>{children}</LargeScreenLayout>}
+          {/* {!!isMobile && <MobileLayout>{children}</MobileLayout>}
+          {!isMobile && <LargeScreenLayout>{children}</LargeScreenLayout>} */}
+          <LargeScreenLayout>{children}</LargeScreenLayout>
           <Toaster
             position="bottom-center"
             toastOptions={{

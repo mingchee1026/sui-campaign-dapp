@@ -1,10 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+//@ts-ignore
 import { useZkLogin } from "@mysten/enoki/react";
 import { UserProfileMenu } from "@/components/general/UserProfileMenu";
 import { Balance } from "@/components/general/Balance";
 import useScroll from "@/lib/hooks/use-scroll";
+import { Paper } from "@/components/general/Paper";
 
 export const TopNavbar = () => {
   const { address } = useZkLogin();
@@ -12,13 +14,7 @@ export const TopNavbar = () => {
 
   return (
     <>
-      <div
-        className={`sticky top-0 flex flex-col w-full justify-evenly z-50 ${
-          scrolled
-            ? "border-b border-gray-200 bg-transparent/50 backdrop-blur-xl"
-            : "bg-white/0"
-        }`}
-      >
+      <div className="sticky top-0 z-50 flex flex-col w-full justify-evenly">
         <div className="grid grid-cols-6 mx-5 my-5">
           <Link
             href="/"

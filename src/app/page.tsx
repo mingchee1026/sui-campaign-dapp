@@ -14,7 +14,8 @@ export default function Home() {
     localStorage.removeItem("refer_code");
 
     if (address) {
-      router.push("/referral");
+      // router.push("/referral");
+      router.replace("/referral");
     }
   }, [address]);
 

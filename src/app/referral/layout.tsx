@@ -17,7 +17,7 @@ export default function AdminRootLayout({ children }: ChildrenProps) {
   }, [address]);
 
   if (!address) {
-    return "Not allowed";
+    return ""; //"Not allowed";
   }
 
   return children;

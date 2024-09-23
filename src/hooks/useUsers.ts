@@ -1,15 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+//@ts-ignore
 import toast from "react-hot-toast";
+//@ts-ignore
 import { useZkLogin, useZkLoginSession } from "@mysten/enoki/react";
+//@ts-ignore
 import { jwtDecode } from "jwt-decode";
 
 export const useUsers = () => {
+  const { address, salt } = useZkLogin();
+  const zkLoginSession = useZkLoginSession();
   const [isLoading, setIsLoading] = useState(false);
   const [profile, setProfile] = useState();
   const [referred, setReferred] = useState();
-  const { address, salt } = useZkLogin();
-  const zkLoginSession = useZkLoginSession();
 
   const handleRegisterUser = useCallback(async () => {
     setIsLoading(true);
@@ -56,6 +59,10 @@ export const useUsers = () => {
 
   const handleGetProfile = useCallback(async () => {
     setIsLoading(true);
+
+    if (!zkLoginSession) {
+      return;
+    }
 
     const jwt = jwtDecode(zkLoginSession?.jwt!);
     const campaign_id = process.env.NEXT_PUBLIC_CAMPAIGN_DATA_ID;

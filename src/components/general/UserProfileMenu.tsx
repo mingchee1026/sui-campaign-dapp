@@ -1,3 +1,4 @@
+//@ts-ignore
 import { LogOut } from "lucide-react";
 import {
   DropdownMenu,
@@ -8,14 +9,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+//@ts-ignore
 import { jwtDecode } from "jwt-decode";
+//@ts-ignore
 import { CopyIcon } from "@radix-ui/react-icons";
-import { formatAddress } from "@mysten/sui.js/utils";
+//@ts-ignore
+import { formatAddress } from "@mysten/sui/utils";
+//@ts-ignore
 import toast from "react-hot-toast";
+
 import {
   useEnokiFlow,
   useZkLogin,
   useZkLoginSession,
+  //@ts-ignore
 } from "@mysten/enoki/react";
 import { useMemo } from "react";
 import { formatString } from "@/helpers/formatString";
@@ -36,6 +43,10 @@ export const UserProfileMenu = () => {
     navigator.clipboard.writeText(address!);
     toast.success("Address copied to clipboard");
   };
+
+  if (!address) {
+    return "";
+  }
 
   return (
     <DropdownMenu>

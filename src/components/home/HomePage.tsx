@@ -73,14 +73,6 @@ export const HomePage = () => {
           height={20}
         />
       </div>
-      <div>
-        <GeneralTable
-          rows={tableRows}
-          headers={tableHeaders}
-          state={tableState}
-          caption={tableCaption}
-        />
-      </div>
     </div>
   );
 };

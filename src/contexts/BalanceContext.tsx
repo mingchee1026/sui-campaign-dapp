@@ -5,10 +5,13 @@ import {
   createContext,
   useCallback,
 } from "react";
+//@ts-ignore
 import { useZkLogin } from "@mysten/enoki/react";
 import { ChildrenProps } from "@/types/ChildrenProps";
+//@ts-ignore
 import BigNumber from "bignumber.js";
-import { MIST_PER_SUI } from "@mysten/sui.js/utils";
+//@ts-ignore
+import { MIST_PER_SUI } from "@mysten/sui/utils";
 import { useSui } from "@/hooks/useSui";
 
 export const useBalance = () => {
@@ -46,6 +49,7 @@ export const BalanceProvider = ({ children }: ChildrenProps) => {
       .getBalance({
         owner: address,
       })
+      //@ts-ignore
       .then((resp) => {
         setIsLoading(false);
         setBalance(
@@ -54,6 +58,7 @@ export const BalanceProvider = ({ children }: ChildrenProps) => {
           )
         );
       })
+      //@ts-ignore
       .catch((err) => {
         console.error(err);
         setIsLoading(false);
