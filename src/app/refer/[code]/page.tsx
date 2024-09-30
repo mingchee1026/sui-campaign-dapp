@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
+//@ts-ignore
 import { useZkLogin } from "@mysten/enoki/react";
 import { Paper } from "@/components/general/Paper";
 import { LoginForm } from "@/components/forms/LoginForm";
@@ -13,7 +14,7 @@ export default function Home() {
   const params = useParams();
 
   useEffect(() => {
-    localStorage.setItem("refer_code", params.code as string);
+    localStorage.setItem("referred_by", params.code as string);
 
     if (address) {
       router.push("/referral");

@@ -14,7 +14,7 @@ export const useRegisterServiceWorker = () => {
           );
           serviceWorkerRegistration = registration;
         })
-        .catch((err) => {
+        .catch((err: any) => {
           console.log("Service worker registration failed", err);
         });
     } else {

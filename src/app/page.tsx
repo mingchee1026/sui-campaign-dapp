@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+//@ts-ignore
 import { useZkLogin } from "@mysten/enoki/react";
 import { Paper } from "@/components/general/Paper";
 import { HomePage } from "@/components/home/HomePage";
@@ -11,7 +12,7 @@ export default function Home() {
   const { address } = useZkLogin();
 
   useEffect(() => {
-    localStorage.removeItem("refer_code");
+    localStorage.removeItem("referred_by");
 
     if (address) {
       // router.push("/referral");

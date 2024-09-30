@@ -4,6 +4,7 @@ import { useRequestSui } from "@/hooks/useRequestSui";
 import { formatSUIAmount } from "@/helpers/formatSUIAmount";
 import Image from "next/image";
 import { useBalance } from "@/contexts/BalanceContext";
+//@ts-ignore
 import BigNumber from "bignumber.js";
 
 export const Balance = () => {

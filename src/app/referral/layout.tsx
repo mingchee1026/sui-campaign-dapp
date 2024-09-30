@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+//@ts-ignore
 import { useZkLogin } from "@mysten/enoki/react";
 import { ChildrenProps } from "@/types/ChildrenProps";
 

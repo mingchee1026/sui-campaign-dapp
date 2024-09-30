@@ -1,18 +1,16 @@
 "use client";
 
-import React, { useLayoutEffect, useEffect, useRef, useState } from "react";
-import { useZkLogin } from "@mysten/enoki/react";
+import React, { useEffect, useState } from "react";
+//@ts-ignore
 import { formatAddress } from "@mysten/sui/utils";
 import Image from "next/image";
 import { Paper } from "@/components/general/Paper";
 import { useUsers } from "@/hooks/useUsers";
 import { GeneralTable } from "@/components/general/GeneralTable";
-import { getSuiExplorerLink } from "@/helpers/getSuiExplorerLink";
 import { SuiExplorerLink } from "@/components/general/SuiExplorerLink";
 import { LoadingButton } from "@/components/general/LoadingButton";
 
 export default function Page() {
-  const { address } = useZkLogin();
   const { isLoading, profile, referred, handleGetProfile, handleGetReferred } =
     useUsers();
   const [referralUri, setReferralUri] = useState("");
@@ -85,6 +83,16 @@ export default function Page() {
         </div>
         <div className="p-2 min-h-[2vh] text-center font-bold text-white text-[22px]">
           Your Referral URL: {referralUri}
+        </div>
+        <div className="flex text-white text-[18px]">
+          <div className="pr-3">CUSTODIAL ADDRESS: </div>
+          {profile &&
+            SuiExplorerLink({
+              //@ts-ignore
+              objectId: profile.custodial_address,
+              moduleName: "",
+              type: "address",
+            })}
         </div>
         <div className="p-2 text-center font-bold text-white text-[22px]">
           Total Referred Users: {tableRows.length}

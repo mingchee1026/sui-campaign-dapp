@@ -15,6 +15,7 @@ import {
   DoubleArrowRightIcon,
   TrackNextIcon,
   TrackPreviousIcon,
+  //@ts-ignore
 } from "@radix-ui/react-icons";
 
 interface GeneralTableProps {
@@ -124,7 +125,7 @@ export const GeneralTable = ({
       <TableFooter className="border-t-2 border-grey-100 bg-inherit text-primary">
         <TableRow>
           <TableCell colSpan={headers.length}>
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <Button
                   variant="outline"

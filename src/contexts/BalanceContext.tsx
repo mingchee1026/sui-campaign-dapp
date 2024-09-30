@@ -59,7 +59,7 @@ export const BalanceProvider = ({ children }: ChildrenProps) => {
         );
       })
       //@ts-ignore
-      .catch((err) => {
+      .catch((err: any) => {
         console.error(err);
         setIsLoading(false);
         setBalance(BigNumber(0));

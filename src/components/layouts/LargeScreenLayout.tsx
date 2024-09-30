@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+//@ts-ignore
 import { useZkLogin } from "@mysten/enoki/react";
 import { ChildrenProps } from "@/types/ChildrenProps";
 import { InfoIcon } from "./InfoIcon";

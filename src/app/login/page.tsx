@@ -4,6 +4,7 @@ import { Paper } from "@/components/general/Paper";
 import { LoginForm } from "@/components/forms/LoginForm";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+//@ts-ignore
 import { useZkLogin } from "@mysten/enoki/react";
 
 export default function Home() {

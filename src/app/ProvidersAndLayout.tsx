@@ -6,8 +6,10 @@ import { BalanceProvider } from "@/contexts/BalanceContext";
 // import { useIsMobile } from "@/hooks/useIsMobile";
 import { useRegisterServiceWorker } from "@/hooks/useRegisterServiceWorker";
 import { ChildrenProps } from "@/types/ChildrenProps";
+//@ts-ignore
 import { EnokiFlowProvider } from "@mysten/enoki/react";
 import React from "react";
+//@ts-ignore
 import { Toaster } from "react-hot-toast";
 import backgroundImage from "../../public/Tablebackground.svg";
 

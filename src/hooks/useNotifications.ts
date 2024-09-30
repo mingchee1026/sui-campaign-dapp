@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+//@ts-ignore
 import toast from "react-hot-toast";
 
 interface SendNotificationProps {
   title: string;
   body?: string;
   url?: string;
+  //@ts-ignore
   actions?: NotificationAction[];
 }
 

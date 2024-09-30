@@ -2,9 +2,11 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+//@ts-ignore
 import { useEnokiFlow, useZkLogin } from "@mysten/enoki/react";
 import Link from "next/link";
 import Image from "next/image";
+//@ts-ignore
 import toast from "react-hot-toast";
 import { stat } from "fs";
 
@@ -28,10 +30,10 @@ export const LoginForm = () => {
           scope: ["openid", "email", "profile"],
         },
       })
-      .then((url) => {
+      .then((url: string) => {
         router.push(url);
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.error(error);
         toast.error("Failed to create authorization URL");
       });

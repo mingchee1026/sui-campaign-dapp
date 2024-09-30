@@ -1,5 +1,5 @@
 //@ts-ignore
-import { SuiClient } from "@mysten/sui.js/client";
+import { SuiClient } from "@mysten/sui/client";
 
 export const useSui = () => {
   const FULL_NODE = process.env.NEXT_PUBLIC_SUI_NETWORK!;

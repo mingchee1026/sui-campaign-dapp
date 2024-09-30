@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+//@ts-ignore
 import toast from "react-hot-toast";
 import { useSui } from "./useSui";
 import { useBalance } from "@/contexts/BalanceContext";
+//@ts-ignore
 import { useZkLogin, useZkLoginSession } from "@mysten/enoki/react";
 
 export const useRequestSui = () => {
@@ -24,13 +26,13 @@ export const useRequestSui = () => {
       })
       .then(async (resp) => {
         setIsLoading(false);
-        await suiClient.waitForTransactionBlock({
+        await suiClient.waitForTransaction({
           digest: resp.data.txDigest,
         });
         handleRefreshBalance();
         toast.success("SUI received");
       })
-      .catch((err) => {
+      .catch((err: any) => {
         setIsLoading(false);
         console.error(err);
         toast.error("Faucet limitation reached. Try again later.");

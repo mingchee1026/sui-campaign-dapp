@@ -1,6 +1,7 @@
 // Copyright (c) Mysten Labs, Inc.
 // SPDX-License-Identifier: Apache-2.0
 
+//@ts-ignore
 import BigNumber from "bignumber.js";
 
 export function formatAmountParts(amount?: BigNumber | null) {

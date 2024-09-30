@@ -6,9 +6,10 @@ import {
   useAuthCallback,
   useZkLogin,
   useZkLoginSession,
+  //@ts-ignore
 } from "@mysten/enoki/react";
-import { handleActivityTx } from "@hooks/useMoveTransaction";
 import { useUsers } from "@/hooks/useUsers";
+//@ts-ignore
 import { jwtDecode } from "jwt-decode";
 import { Spinner } from "@/components/general/Spinner";
 
@@ -20,9 +21,7 @@ const AuthPage = () => {
   useEffect(() => {
     if (handled) {
       handleRegisterUser().then(() => {
-        handleActivitytx().then(() => {
-          router.push("/");
-        });
+        router.push("/");
       });
     }
   }, [handled]);
