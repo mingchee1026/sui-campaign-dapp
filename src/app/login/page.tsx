@@ -4,20 +4,21 @@ import { Paper } from "@/components/general/Paper";
 import { LoginForm } from "@/components/forms/LoginForm";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-//@ts-ignore
-import { useZkLogin } from "@mysten/enoki/react";
+import { useZkLogin } from "@/hooks/useZkLogin";
 
 export default function Home() {
   const router = useRouter();
-  const { address } = useZkLogin();
+  const { isAuthenticated } = useZkLogin();
 
   useEffect(() => {
-    if (address) {
+    if (isAuthenticated()) {
       router.push("/referral");
     }
-  }, [address]);
+  }, []);
 
   return (
-    <Paper className="max-w-[600px] mx-auto">{!address && <LoginForm />}</Paper>
+    <Paper className="max-w-[600px] mx-auto">
+      <LoginForm />
+    </Paper>
   );
 }

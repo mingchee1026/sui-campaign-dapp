@@ -1,8 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-//@ts-ignore
-import { useZkLogin } from "@mysten/enoki/react";
+import { useZkLogin } from "@/hooks/useZkLogin";
 import { UserProfileMenu } from "@/components/general/UserProfileMenu";
 import { Balance } from "@/components/general/Balance";
 import useScroll from "@/lib/hooks/use-scroll";
@@ -28,7 +27,7 @@ export const TopNavbar = () => {
             />
           </Link>
           <div className="flex items-center justify-end col-span-3 space-x-1">
-            {!!address && (
+            {!!address() && (
               <div className="flex items-center space-x-2">
                 <Balance />
                 <UserProfileMenu />

@@ -7,43 +7,6 @@ import { GeneralTable } from "../general/GeneralTable";
 export const HomePage = () => {
   const router = useRouter();
 
-  const tableHeaders = ["ID", "Referee Address", "Explorer"];
-  const tableRows = [
-    {
-      id: "1",
-      columns: [
-        "1",
-        "0xb66d3400281501a1278c09d6dc9bde4b3741a5de7629898ba0278964ea82109e",
-        "View",
-      ],
-      isSelected: false,
-    },
-    {
-      id: "2",
-      columns: [
-        "2",
-        "0xb66d3400281501a1278c09d6dc9bde4b3741a5de7629898ba0278964ea82109e",
-        "View",
-      ],
-      isSelected: false,
-    },
-    {
-      id: "3",
-      columns: [
-        "3",
-        "0xb66d3400281501a1278c09d6dc9bde4b3741a5de7629898ba0278964ea82109e",
-        "View",
-      ],
-      isSelected: false,
-    },
-  ];
-  const tableState = {
-    page: 0,
-    pageSize: 10,
-    isLoading: false,
-  };
-  const tableCaption = "Referrals Table";
-
   const onLoginClick = async () => {
     router.push("/login");
   };

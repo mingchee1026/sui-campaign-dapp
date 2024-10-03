@@ -2,25 +2,26 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-//@ts-ignore
-import { useZkLogin } from "@mysten/enoki/react";
 import { Paper } from "@/components/general/Paper";
 import { HomePage } from "@/components/home/HomePage";
+import { useZkLogin } from "@/hooks/useZkLogin";
 
 export default function Home() {
   const router = useRouter();
-  const { address } = useZkLogin();
+  const { isAuthenticated } = useZkLogin();
 
   useEffect(() => {
     localStorage.removeItem("referred_by");
 
-    if (address) {
+    if (isAuthenticated()) {
       // router.push("/referral");
       router.replace("/referral");
     }
-  }, [address]);
+  }, []);
 
   return (
-    <Paper className="max-w-[600px] mx-auto">{!address && <HomePage />}</Paper>
+    <Paper className="max-w-[600px] mx-auto">
+      <HomePage />
+    </Paper>
   );
 }

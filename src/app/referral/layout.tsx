@@ -2,22 +2,21 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-//@ts-ignore
-import { useZkLogin } from "@mysten/enoki/react";
+import { useZkLogin } from "@/hooks/useZkLogin";
 import { ChildrenProps } from "@/types/ChildrenProps";
 
 export default function AdminRootLayout({ children }: ChildrenProps) {
   const router = useRouter();
-  const { address } = useZkLogin();
+  const { isAuthenticated } = useZkLogin();
 
   useEffect(() => {
-    if (!address) {
+    if (!isAuthenticated()) {
       console.log("No address found, taking you back to '/'");
       router.push("/");
     }
-  }, [address]);
+  }, []);
 
-  if (!address) {
+  if (!isAuthenticated()) {
     return ""; //"Not allowed";
   }
 

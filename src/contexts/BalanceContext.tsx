@@ -5,8 +5,7 @@ import {
   createContext,
   useCallback,
 } from "react";
-//@ts-ignore
-import { useZkLogin } from "@mysten/enoki/react";
+import { useZkLogin } from "@/hooks/useZkLogin";
 import { ChildrenProps } from "@/types/ChildrenProps";
 //@ts-ignore
 import BigNumber from "bignumber.js";
@@ -38,16 +37,16 @@ export const BalanceProvider = ({ children }: ChildrenProps) => {
   const { address } = useZkLogin();
 
   useEffect(() => {
-    if (address) handleRefreshBalance();
-  }, [address]);
+    if (address()) handleRefreshBalance();
+  }, []);
 
   const handleRefreshBalance = useCallback(async () => {
     if (!address) return;
-    console.log(`Refreshing balance for ${address}...`);
+    console.log(`Refreshing balance for ${address()!}...`);
     setIsLoading(true);
     await suiClient
       .getBalance({
-        owner: address,
+        owner: address()!,
       })
       //@ts-ignore
       .then((resp) => {

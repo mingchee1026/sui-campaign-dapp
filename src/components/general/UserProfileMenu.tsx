@@ -1,5 +1,6 @@
 //@ts-ignore
 import { LogOut } from "lucide-react";
+import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,33 +19,27 @@ import { formatAddress } from "@mysten/sui/utils";
 //@ts-ignore
 import toast from "react-hot-toast";
 
-import {
-  useEnokiFlow,
-  useZkLogin,
-  useZkLoginSession,
-  //@ts-ignore
-} from "@mysten/enoki/react";
+import { useZkLogin } from "@/hooks/useZkLogin";
 import { useMemo } from "react";
 import { formatString } from "@/helpers/formatString";
 import Image from "next/image";
 
 export const UserProfileMenu = () => {
-  const { address } = useZkLogin();
-  const enokiFlow = useEnokiFlow();
-  const zkLoginSession = useZkLoginSession();
+  const router = useRouter();
+  const { address, decodeJwt } = useZkLogin();
 
   const decodedJWT = useMemo(() => {
-    if (!zkLoginSession?.jwt) return null;
-    const decoded: any = jwtDecode(zkLoginSession?.jwt!);
-    return decoded;
-  }, [zkLoginSession?.jwt]);
+    const jwt: any = decodeJwt();
+    if (!jwt) return null;
+    return jwt;
+  }, []);
 
   const handleCopyAddress = () => {
-    navigator.clipboard.writeText(address!);
+    navigator.clipboard.writeText(address()!);
     toast.success("Address copied to clipboard");
   };
 
-  if (!address) {
+  if (!address()) {
     return "";
   }
 
@@ -75,14 +70,17 @@ export const UserProfileMenu = () => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem className="flex items-center justify-between w-full">
-            <div>{formatAddress(address!)}</div>
+            <div>{formatAddress(address()!)}</div>
             <button onClick={handleCopyAddress}>
               <CopyIcon className="w-4 h-4 text-black" />
             </button>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuItem
-          onClick={() => enokiFlow.logout()}
+          onClick={() => {
+            sessionStorage.clear();
+            router.push("/");
+          }}
           className="flex items-center justify-between w-full"
         >
           <div>Log out</div>

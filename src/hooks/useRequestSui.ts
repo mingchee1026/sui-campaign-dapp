@@ -4,15 +4,13 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useSui } from "./useSui";
 import { useBalance } from "@/contexts/BalanceContext";
-//@ts-ignore
-import { useZkLogin, useZkLoginSession } from "@mysten/enoki/react";
+import { useZkLogin } from "./useZkLogin";
 
 export const useRequestSui = () => {
   const { suiClient } = useSui();
   const [isLoading, setIsLoading] = useState(false);
   const [balance, setBalance] = useState(0);
-  const { address } = useZkLogin();
-  const zkLoginSession = useZkLoginSession();
+  const { jwtData } = useZkLogin();
   const { handleRefreshBalance } = useBalance();
 
   const handleRequestSui = useCallback(async () => {
@@ -20,8 +18,7 @@ export const useRequestSui = () => {
     await axios
       .get("https://pocs-faucet.vercel.app/api/faucet", {
         headers: {
-          "Enoki-api-key": process.env.NEXT_PUBLIC_ENOKI_API_KEY!,
-          Authorization: `Bearer ${zkLoginSession?.jwt}`,
+          Authorization: `Bearer ${jwtData}`,
         },
       })
       .then(async (resp) => {
@@ -37,7 +34,7 @@ export const useRequestSui = () => {
         console.error(err);
         toast.error("Faucet limitation reached. Try again later.");
       });
-  }, [zkLoginSession?.jwt]);
+  }, []);
 
   return {
     isLoading,
