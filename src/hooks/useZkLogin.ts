@@ -1,57 +1,49 @@
-import { JwtPayload, jwtDecode } from "jwt-decode";
-import { jwtToAddress } from "@mysten/zklogin";
+import { jwtDecode } from "jwt-decode";
+import { generateRandomness, jwtToAddress } from "@mysten/zklogin";
 
 export const useZkLogin = () => {
   const isAuthenticated = () => {
-    const token = jwtData();
+    const token = encodedJwt();
     return token && token !== "null";
   };
 
+  const userSalt = () => {
+    if (typeof window !== "undefined") {
+      let salt = sessionStorage.getItem("sui_user_salt");
+      return salt;
+    }
+    return null;
+  };
+
   const address = () => {
-    const jwt = jwtData();
-    if (!jwt) {
+    const jwt = encodedJwt();
+    const salt = userSalt();
+
+    console.log({ salt });
+
+    if (!jwt || !salt) {
       return null;
     }
 
-    const email = claims()["email"];
-    return jwtToAddress(jwt, hashcode(email));
+    return jwtToAddress(jwt, salt); // BigInt(salt!));
   };
 
-  const jwtData = () => {
-    return sessionStorage.getItem("sui_jwt_token");
-  };
-
-  const decodeJwt = () => {
-    const jwt = sessionStorage.getItem("sui_jwt_token");
-    if (jwt) {
-      return jwtDecode(jwt);
+  const encodedJwt = () => {
+    if (typeof window !== "undefined") {
+      return sessionStorage.getItem("sui_jwt_token");
     }
     return null;
   };
 
-  const claims = () => {
-    const token = jwtData();
-    if (token) {
-      return JSON.parse(atob(token.split(".")[1]));
-    }
-    return null;
-  };
-
-  const hashcode = (s: string) => {
-    if (!s) {
-      return "";
-    }
-
-    var h = 0,
-      l = s.length,
-      i = 0;
-    if (l > 0) {
-      while (i < l) {
-        h = ((h << 5) - h + s.charCodeAt(i++)) | 0;
+  const decodedJwt = () => {
+    if (typeof window !== "undefined") {
+      const jwt = sessionStorage.getItem("sui_jwt_token");
+      if (jwt) {
+        return jwtDecode(jwt);
       }
     }
-    return h.toString();
+    return null;
   };
 
-  return { isAuthenticated, address, jwtData, decodeJwt };
+  return { userSalt, isAuthenticated, address, encodedJwt, decodedJwt };
 };

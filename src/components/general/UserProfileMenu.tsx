@@ -26,21 +26,23 @@ import Image from "next/image";
 
 export const UserProfileMenu = () => {
   const router = useRouter();
-  const { address, decodeJwt } = useZkLogin();
+  const { address, decodedJwt } = useZkLogin();
 
   const decodedJWT = useMemo(() => {
-    const jwt: any = decodeJwt();
+    const jwt: any = decodedJwt();
     if (!jwt) return null;
     return jwt;
   }, []);
 
   const handleCopyAddress = () => {
-    navigator.clipboard.writeText(address()!);
+    //@ts-ignore
+    navigator.clipboard.writeText(address());
     toast.success("Address copied to clipboard");
   };
 
-  if (!address()) {
-    return "";
+  const walletAddress = address();
+  if (!walletAddress) {
+    return;
   }
 
   return (
@@ -70,7 +72,7 @@ export const UserProfileMenu = () => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem className="flex items-center justify-between w-full">
-            <div>{formatAddress(address()!)}</div>
+            <div>{formatAddress(walletAddress)}</div>
             <button onClick={handleCopyAddress}>
               <CopyIcon className="w-4 h-4 text-black" />
             </button>

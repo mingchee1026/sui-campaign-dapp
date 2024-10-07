@@ -2,13 +2,11 @@ import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 //@ts-ignore
 import toast from "react-hot-toast";
-//@ts-ignore
-import { jwtDecode } from "jwt-decode";
 import { useZkLogin } from "./useZkLogin";
 
 export const useUsers = () => {
   // const enokiFlow = useEnokiFlow();
-  const { address, jwtData, decodeJwt } = useZkLogin();
+  const { address, decodedJwt } = useZkLogin();
   // const zkLoginSession = useZkLoginSession();
   const [isLoading, setIsLoading] = useState(false);
   const [profile, setProfile] = useState();
@@ -17,32 +15,23 @@ export const useUsers = () => {
   const handleRegisterUser = useCallback(async () => {
     setIsLoading(true);
 
-    // const signer = await enokiFlow.getKeypair({ network: "testnet" });
-    // await enokiFlow.getProof();
-    // const session = await enokiFlow.getSession();
-
-    // const ephemeralKeyPair = Ed25519Keypair.fromSecretKey(
-    //   fromB64(session?.ephemeralKeyPair)
-    // );
-    // console.log({ sessionKey: session?.ephemeralKeyPair });
-    // console.log({ base64Key: fromB64(session?.ephemeralKeyPair) });
-    // console.log({ ephemeralKeyPair });
-    // console.log({
-    //   ephemeralAddress: signer.getPublicKey().toSuiAddress(),
-    // });
-    // console.log({ ephemeralKeypair: signer });
-
-    const referred_by = localStorage.getItem("referred_by");
-    const postData = {
-      campaign_id: process.env.NEXT_PUBLIC_CAMPAIGN_DATA_ID,
-      wallet_address: address(),
-      referred_by,
-    };
+    const encodedJwt = sessionStorage.getItem("sui_jwt_token");
 
     const axiosConfig = {
       headers: {
-        Authorization: `Bearer ${jwtData()}`,
+        Authorization: `Bearer ${encodedJwt}`,
       },
+    };
+
+    const wallet_address = address();
+    const referred_by = localStorage.getItem("referred_by");
+
+    console.log({ wallet_address });
+
+    const postData = {
+      campaign_id: process.env.NEXT_PUBLIC_CAMPAIGN_DATA_ID,
+      wallet_address,
+      referred_by,
     };
 
     console.log({ postData, axiosConfig });
@@ -75,8 +64,9 @@ export const useUsers = () => {
   const handleGetProfile = useCallback(async () => {
     setIsLoading(true);
 
-    const jwt = decodeJwt();
+    const jwt = decodedJwt();
     if (!jwt) {
+      setIsLoading(false);
       return;
     }
 

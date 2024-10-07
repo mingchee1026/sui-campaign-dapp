@@ -10,7 +10,7 @@ import { Paper } from "@/components/general/Paper";
 export const TopNavbar = () => {
   const { address } = useZkLogin();
   const scrolled = useScroll(10);
-
+  console.log({ profile: address() });
   return (
     <>
       <div className="sticky top-0 z-50 flex flex-col w-full justify-evenly">

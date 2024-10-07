@@ -76,7 +76,7 @@ export const LoginForm = () => {
         client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
         redirect_uri: customRedirectUri, //REDIRECT_URI,
         response_type: "id_token",
-        scope: "profile", // "openid", "email", "profile"
+        scope: "openid email profile", // "openid", "email", "profile"
         nonce: userKeyData.nonce,
       });
 

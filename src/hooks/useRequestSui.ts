@@ -10,7 +10,7 @@ export const useRequestSui = () => {
   const { suiClient } = useSui();
   const [isLoading, setIsLoading] = useState(false);
   const [balance, setBalance] = useState(0);
-  const { jwtData } = useZkLogin();
+  const { encodedJwt } = useZkLogin();
   const { handleRefreshBalance } = useBalance();
 
   const handleRequestSui = useCallback(async () => {
@@ -18,7 +18,7 @@ export const useRequestSui = () => {
     await axios
       .get("https://pocs-faucet.vercel.app/api/faucet", {
         headers: {
-          Authorization: `Bearer ${jwtData}`,
+          Authorization: `Bearer ${encodedJwt()}`,
         },
       })
       .then(async (resp) => {
