@@ -61,7 +61,7 @@ const AuthPage = () => {
     sessionStorage.setItem("sui_jwt_token", jwt_token_encoded!);
 
     const userKeyData: UserKeyData = JSON.parse(
-      localStorage.getItem("userKeyData")!
+      sessionStorage.getItem("userKeyData")!
     );
 
     if (!jwt_token_encoded) {

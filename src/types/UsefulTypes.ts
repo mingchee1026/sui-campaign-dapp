@@ -1,3 +1,12 @@
+import { Provider } from "@radix-ui/react-tooltip";
+
+export type OpenIdProvider = "Google" | "Twitch" | "Facebook" | "Apple";
+
+export interface OpenIdProviderObject {
+  provider: OpenIdProvider;
+  logo: string;
+}
+
 export interface LoginResponse {
   iss: string;
   azp: string;
@@ -11,6 +20,7 @@ export interface LoginResponse {
 }
 
 export interface UserKeyData {
+  provider: OpenIdProvider;
   randomness: string;
   nonce: string;
   ephemeralPublicKey: string;
